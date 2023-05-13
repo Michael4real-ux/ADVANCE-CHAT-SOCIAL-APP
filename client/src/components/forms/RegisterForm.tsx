@@ -23,8 +23,8 @@ export const RegisterForm = () => {
     console.log(data);
     try {
       await postRegisterUser(data);
-    } catch (err) {
-      console.log(err);
+    } catch (err:any) {
+      console.log(err?.response?.data?.message);
     }
   };
   
