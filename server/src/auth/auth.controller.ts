@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Inject,
   Post,
+  Req,
   Res,
   UseGuards,
   UsePipes,
@@ -14,8 +15,8 @@ import { Routes, Services } from '../utils/constants';
 import { IAuthService } from './auth';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { IUserService } from 'src/users/user';
-import { LocalAuthGuard } from './utils/Guards';
-import { Response } from 'express';
+import { AuthenticatedGuard, LocalAuthGuard } from './utils/Guards';
+import { Response, Request } from 'express';
 
 @Controller(Routes.AUTH)
 export class AuthController {
@@ -41,9 +42,11 @@ export class AuthController {
     return res.sendStatus(HttpStatus.OK);
   }
 
-  @Get('satus')
-  status() {
-    return 'heloo';
+  @Get('status')
+  @UseGuards(AuthenticatedGuard)
+  status(@Req() req: Request, @Res() res: Response) {
+    // console.log(req.user);
+    res.send(req.user);
   }
 
   @Get('logout')

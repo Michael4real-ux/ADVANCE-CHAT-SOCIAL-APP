@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { postRegisterUser } from '../../utils/api';
 import {
   Button,
@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const RegisterForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,6 +28,7 @@ export const RegisterForm = () => {
      const  newData = await postRegisterUser(data);
     //  console.log(newData?.data?.message);
      toast.success(newData?.data?.message)
+     navigate('/login')
     } catch (err:any) {
       // console.log(err?.response?.data?.message);
       toast.error(err?.response?.data?.message)
