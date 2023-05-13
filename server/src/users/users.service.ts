@@ -5,7 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { IUserService } from './user';
-import { CreateUserDetails } from 'src/utils/types';
+import { CreateUserDetails, FindUserParams } from 'src/utils/types';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/utils/sequelize';
 import { hashPassword } from 'src/utils/helpers';
@@ -17,7 +17,7 @@ export class UsersService implements IUserService {
     @InjectModel(User) private readonly userRepository: typeof User,
     private sequelize: Sequelize,
   ) {}
-  async createUser(userDetails: CreateUserDetails) {
+  async createUser(userDetails: CreateUserDetails): Promise<any> {
     await this.checkUserExistenceByEmail(userDetails.email);
     await this.checkUserExistenceByUsername(userDetails.username);
 
@@ -37,6 +37,17 @@ export class UsersService implements IUserService {
       lastName: newUser.lastName,
       username: newUser.username,
     };
+  }
+
+  /**
+   * @Function : findUser
+   * @Tables_Affected : users
+   * @Purpose : Finds the user in table either by id or email
+   */
+  async findUser(findUserParams: FindUserParams): Promise<User> {
+    return this.userRepository.findOne({
+      where: { email: findUserParams.email },
+    });
   }
 
   async checkUserExistenceByEmail(email: string) {

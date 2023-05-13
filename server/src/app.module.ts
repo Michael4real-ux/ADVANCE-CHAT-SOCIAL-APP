@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import * as Joi from 'joi';
 import { DatabaseModule } from './database/database.module';
 import * as morgan from 'morgan';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -17,8 +18,11 @@ import * as morgan from 'morgan';
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
+        PORT: Joi.number().required(),
+        COOKIE_SECRET: Joi.string().required(),
       }),
     }),
+    PassportModule.register({ session: true }),
     AuthModule,
     UsersModule,
     DatabaseModule,
