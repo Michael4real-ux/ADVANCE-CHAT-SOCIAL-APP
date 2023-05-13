@@ -31,6 +31,7 @@ export class UsersService implements IUserService {
 
     await dbTransaction.commit();
     return {
+      message: 'Successfully created an account',
       id: newUser.id,
       email: newUser.email,
       firstName: newUser.firstName,

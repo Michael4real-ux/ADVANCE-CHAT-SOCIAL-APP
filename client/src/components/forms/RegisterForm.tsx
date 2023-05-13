@@ -9,6 +9,8 @@ import {
 } from '../../utils/styles';
 import { CreateUserParams } from '../../utils/types';
 import styles from './index.module.scss';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const RegisterForm = () => {
   const {
@@ -20,11 +22,14 @@ export const RegisterForm = () => {
   console.log(errors);
 
   const onSubmit = async (data: CreateUserParams) => {
-    console.log(data);
+    // console.log(data);
     try {
-      await postRegisterUser(data);
+     const  newData = await postRegisterUser(data);
+    //  console.log(newData?.data?.message);
+     toast.success(newData?.data?.message)
     } catch (err:any) {
-      console.log(err?.response?.data?.message);
+      // console.log(err?.response?.data?.message);
+      toast.error(err?.response?.data?.message)
     }
   };
   
