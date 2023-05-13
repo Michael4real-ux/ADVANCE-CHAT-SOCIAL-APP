@@ -1,17 +1,19 @@
-import React, { FC, useEffect, useState } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useState } from 'react';
+import {  Route, Routes, } from "react-router-dom";
 import { AuthenticatedRoute } from "./components/AuthenticatedRoute";
 import { ConversationChannelPage } from "./pages/ConversationChannelPage";
 import { ConversationPage } from "./pages/ConversationPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
-import { getAuthUser } from "./utils/api";
-import { User } from "./utils/types";
+import { AuthContext } from './utils/context/AuthContext';
+import { User } from './utils/types';
 import { ToastContainer } from "react-toastify";
 
 function App() {
+  const [user, setUser] = useState<User>();
   return (
     <>
+      <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
       <ToastContainer/>
       <Routes>
         <Route path="/register" element={<RegisterPage />} />
@@ -27,7 +29,9 @@ function App() {
           <Route path=":id" element={<ConversationChannelPage />} />
         </Route>
       </Routes>
+      </AuthContext.Provider>
     </>
+    
   );
 }
 

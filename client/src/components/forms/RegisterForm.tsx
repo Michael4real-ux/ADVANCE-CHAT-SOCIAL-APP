@@ -17,10 +17,10 @@ export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<CreateUserParams>();
 
-  console.log(errors);
+  // console.log(errors);
 
   const onSubmit = async (data: CreateUserParams) => {
     // console.log(data);
