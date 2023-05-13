@@ -19,7 +19,7 @@ export class UsersService implements IUserService {
   ) {}
   async createUser(userDetails: CreateUserDetails): Promise<any> {
     await this.checkUserExistenceByEmail(userDetails.email);
-    await this.checkUserExistenceByUsername(userDetails.username);
+    // await this.checkUserExistenceByUsername(userDetails.username);
 
     const dbTransaction = await this.sequelize.transaction();
 
@@ -58,11 +58,11 @@ export class UsersService implements IUserService {
     }
   }
 
-  async checkUserExistenceByUsername(username: string) {
-    const user = await this.userRepository.findOne({ where: { username } });
-    if (user) {
-      // throw new BadRequestException('email already in use');
-      throw new HttpException('Username already exist', HttpStatus.CONFLICT);
-    }
-  }
+  // async checkUserExistenceByUsername(username: string) {
+  //   const user = await this.userRepository.findOne({ where: { username } });
+  //   if (user) {
+  //     // throw new BadRequestException('email already in use');
+  //     throw new HttpException('Username already exist', HttpStatus.CONFLICT);
+  //   }
+  // }
 }

@@ -14,8 +14,8 @@ export class User extends Model {
   @Column(DataType.UUID)
   id: string;
 
-  @Column({ type: DataType.STRING, allowNull: false, unique: true })
-  username: string;
+  @Column({ type: DataType.STRING, unique: true })
+  username: string | null;
 
   @Column({ type: DataType.STRING, allowNull: true, unique: true })
   email: string;
