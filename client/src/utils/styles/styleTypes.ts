@@ -3,3 +3,8 @@ export type PageProps = Partial<{
   justifyContent: string;
   alignItems: string;
 }>;
+
+
+export type InputContainerProps = Partial<{
+  backgroundColor: string;
+}>;

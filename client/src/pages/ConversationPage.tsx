@@ -4,7 +4,7 @@ import { ConversationPanel } from '../components/conversations/ConversationPanel
 import { ConversationSidebar } from '../components/conversations/ConversationSidebar';
 // import { getAuthUser } from '../utils/api';
 import { Page } from '../utils/styles';
-import mockConversations from '../__mocks__/conversations';
+// import mockConversations from '../__mocks__/conversations';
 
 export const ConversationPage = () => {
   const { id } = useParams();
@@ -12,7 +12,7 @@ export const ConversationPage = () => {
 
   return (
     <Page>
-      <ConversationSidebar conversations={mockConversations} />
+      <ConversationSidebar conversations={[]} />
       {!id && <ConversationPanel />}
       <Outlet />
     </Page>
