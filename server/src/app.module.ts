@@ -7,6 +7,8 @@ import { DatabaseModule } from './database/database.module';
 import * as morgan from 'morgan';
 import { PassportModule } from '@nestjs/passport';
 import { ConversationsModule } from './conversations/conversations.module';
+import { ParticipantConversationsModule } from './participant-conversations/participant-conversations.module';
+import { ParticipantsModule } from './participants/participants.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { ConversationsModule } from './conversations/conversations.module';
     UsersModule,
     DatabaseModule,
     ConversationsModule,
+    ParticipantConversationsModule,
+    ParticipantsModule,
   ],
   controllers: [],
   providers: [],

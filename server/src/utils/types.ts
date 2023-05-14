@@ -14,7 +14,7 @@ export type ValidateUserDetails = {
 };
 
 export type FindUserParams = Partial<{
-  id: number;
+  id: string;
   email: string;
 }>;
 
@@ -27,13 +27,13 @@ export interface AuthenticatedRequest extends Request {
   user: User;
 }
 export type FindParticipantParams = Partial<{
-  id: number;
+  id: string;
 }>;
 export type CreateParticipantParams = {
-  id: number;
+  id: string;
 };
 export type CreateMessageParams = {
   content: string;
-  conversationId: number;
+  conversationId: string;
   user: User;
 };

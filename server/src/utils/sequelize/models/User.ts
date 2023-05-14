@@ -5,7 +5,10 @@ import {
   Model,
   PrimaryKey,
   Default,
+  BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript';
+import { Participant } from './Participant';
 
 @Table
 export class User extends Model {
@@ -20,20 +23,26 @@ export class User extends Model {
   @Column({ type: DataType.STRING, allowNull: true, unique: true })
   email: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   firstName: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   lastName: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   password: string;
 
-  //   @BeforeSave
-  //   static async hashPassword(user: User) {
-  //     if (user.changed('password')) {
-  //       const hashedPassword = await argon2.hash(user.password);
-  //       user.password = hashedPassword;
-  //     }
-  //   }
+  @ForeignKey(() => Participant)
+  @Column({ type: DataType.UUID, unique: true })
+  ParticipantId: string;
+
+  @BelongsTo(() => Participant)
+  participant: Participant;
+
+  // @ForeignKey(() => Participant)
+  // @Column({ type: DataType.UUID, unique: true })
+  // participantId: string;
+
+  // @HasOne(() => Participant)
+  // participant: Participant;
 }
