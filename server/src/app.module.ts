@@ -6,6 +6,7 @@ import * as Joi from 'joi';
 import { DatabaseModule } from './database/database.module';
 import * as morgan from 'morgan';
 import { PassportModule } from '@nestjs/passport';
+import { ConversationsModule } from './conversations/conversations.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PassportModule } from '@nestjs/passport';
     AuthModule,
     UsersModule,
     DatabaseModule,
+    ConversationsModule,
   ],
   controllers: [],
   providers: [],
