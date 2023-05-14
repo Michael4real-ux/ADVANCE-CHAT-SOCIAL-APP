@@ -7,14 +7,17 @@ import {
 import { IUserService } from './user';
 import { CreateUserDetails, FindUserParams } from 'src/utils/types';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from 'src/utils/sequelize';
+import { Participant, User } from 'src/utils/sequelize';
 import { hashPassword } from 'src/utils/helpers';
 import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class UsersService implements IUserService {
   constructor(
-    @InjectModel(User) private readonly userRepository: typeof User,
+    @InjectModel(User)
+    private readonly userRepository: typeof User,
+    @InjectModel(Participant)
+    private readonly participantRepository: typeof Participant,
     private sequelize: Sequelize,
   ) {}
   async createUser(userDetails: CreateUserDetails): Promise<any> {
@@ -45,9 +48,15 @@ export class UsersService implements IUserService {
    * @Tables_Affected : users
    * @Purpose : Finds the user in table either by id or email
    */
-  async findUser(findUserParams: FindUserParams): Promise<User> {
+  async findUserByEmailRelation(findUserParams: FindUserParams): Promise<User> {
     return this.userRepository.findOne({
       where: { email: findUserParams.email },
+      include: [
+        {
+          model: Participant,
+          as: 'participant',
+        },
+      ],
     });
   }
 
@@ -59,6 +68,26 @@ export class UsersService implements IUserService {
     }
   }
 
+  async findUserByIdRelation(findUserParams: FindUserParams): Promise<User> {
+    return this.userRepository.findOne({
+      where: { id: findUserParams.id },
+      include: [
+        {
+          model: Participant,
+          as: 'participant',
+        },
+      ],
+    });
+  }
+
+  async saveUser(user: User) {
+    return this.userRepository.update(
+      { ParticipantId: user },
+      {
+        where: { ParticipantId: null },
+      },
+    );
+  }
   // async checkUserExistenceByUsername(username: string) {
   //   const user = await this.userRepository.findOne({ where: { username } });
   //   if (user) {

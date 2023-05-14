@@ -12,7 +12,7 @@ export class AuthService implements IAuthService {
     @Inject(Services.USERS) private readonly userService: IUserService,
   ) {}
   async validateUser(userCredentials: ValidateUserDetails): Promise<any> {
-    const user = await this.userService.findUser({
+    const user = await this.userService.findUserByEmailRelation({
       email: userCredentials.email,
     });
     if (!user)
